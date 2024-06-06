@@ -42,7 +42,7 @@ int min_ten(int arr[], const int size = 100, int i = 0, int min_sum = INT_MAX, i
 //    else {
 //        return min_pos;
 //    }
-//}
+//} 
 
 int main() {
     srand(time(0));
