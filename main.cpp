@@ -35,7 +35,6 @@ void max_in_array(int arr[][FULL_SIZE], int size)
     cout << "Maxin 2-D array: " << max_val << endl;
 }
 
-
 //for 3-d array
 void max_in_array(int arr[][FULL_SIZE][FULL_SIZE], int size)
 {
