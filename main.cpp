@@ -17,6 +17,37 @@ void user_number(int user_arr[]) {
     }
 }
 
+int find_buls(int arr_comp[], int user_arr[], int num_bulls = 0, int k = 0, int size = main_size) {
+    
+    
+    if (k < size) {
+        for (int j = 0; j < size; j++) {
+            if (arr_comp[j] == user_arr[k]) {
+                num_bulls++;
+
+                for (int i = k; i < size; i++)//delete num that have bull arr_user
+                {
+                    user_arr[i] = user_arr[i + 1];
+                }
+                for (int i = j; i < size; i++)//delete num that have bull comp_arr
+                {
+                    user_arr[i] = user_arr[i + 1];
+                }
+                size--;
+
+                break;
+            }
+        }
+        find_buls(arr_comp, user_arr, num_bulls, ++k, size);
+
+    }
+    else {
+        return num_bulls;
+    }
+    
+
+}
+
 int find_cows(int comp_arr[], int arr_user[], int c = 0, int num_cows = 0) {
     if (c < main_size) {
         if (comp_arr[c] == arr_user[c]) {
@@ -42,17 +73,7 @@ int game_func(int comp_arr[], int i = 1) {
     }
     if (!win) {
         int num_bulls = 0, num_cow = 0;
-        int k = 0;
-        while (k < main_size)
-        {
-            for (int j = 0; j < main_size; j++) {
-                if (comp_arr[j] == arr_user[k]) {
-                    num_bulls++;
-                    k++;
-                }
-            }
-            k++;
-        }
+        num_bulls = find_buls(comp_arr, arr_user);
         num_cow = find_cows(comp_arr, arr_user);
         num_bulls -= num_cow;
         cout << "You have bull(s): " << num_bulls << endl;
@@ -77,6 +98,7 @@ int main() {
         arr_comp[i] = rand() % 10;
     }
 
+    //print arr_comp
     for (int i = 0; i < main_size; i++) {
         cout << arr_comp[i] << " ";
     }
