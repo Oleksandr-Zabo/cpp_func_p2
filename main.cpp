@@ -4,11 +4,19 @@ using namespace std;
 
 const int main_size = 4;
 
-void user_number(int user_arr[]) {
-    int user_num;
+
+template <typename type>
+void user_number(type user_arr[]) {
+    type user_num;
     do {
         cout << "Enter your number (4 digits): ";
         cin >> user_num;
+
+        if (cin.fail()) {//cin.fail()- check input data with problems
+            cout << "Error: Incorrect input! Please enter a valid integer." << endl;
+            cin.clear();//continue work after problem
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');//clear bufer to input new data
+        }
     } while (user_num < 1000 || user_num > 9999);
 
     for (int i = 0; i < main_size; i++) {
@@ -31,44 +39,6 @@ bool is_bulls(int arr_comp[], int user_arr[], int size) {
 }
 
 
-//have bugs
-//int find_buls(int arr_comp[], int user_arr[], int num_bulls = 0, int k = 0, int size = main_size) {//num bulls + num cow
-//    if (is_bulls(arr_comp, user_arr, size)) {
-//        for (int j = 0; j < size; j++) {
-//            if (arr_comp[j] == user_arr[k]) {
-//                num_bulls++;
-//
-//                for (int i = k; i < size; i++)//delete num that have bull arr_user
-//                {
-//                    user_arr[i] = user_arr[i + 1];
-//                }
-//                for (int i = j; i < size; i++)//delete num that have bull comp_arr
-//                {
-//                    arr_comp[i] = arr_comp[i + 1];
-//                }
-//                size--;
-//
-//
-//                for (int i = 0; i < size; i++) {//print arrays to fix bags
-//                    cout << arr_comp[i] << " ";
-//                }
-//                cout << endl;
-//                for (int i = 0; i < size; i++) {
-//                    cout << user_arr[i] << " ";
-//                }
-//                cout << endl;
-//
-//                break;
-//            }
-//        }
-//        find_buls(arr_comp, user_arr, num_bulls, k++, size);
-//
-//    }
-//    else {
-//        return num_bulls;
-//    }
-//}
-
 int find_bulls(int arr_comp[], int user_arr[], int num_bulls = 0, int k = 0, int size = main_size) {
     if (is_bulls(arr_comp, user_arr, size)) {
         for (int j = 0; j < size; j++) {
@@ -84,15 +54,6 @@ int find_bulls(int arr_comp[], int user_arr[], int num_bulls = 0, int k = 0, int
                     arr_comp[i] = arr_comp[i + 1];
                 }
                 size--;
-
-                //for (int i = 0; i < size; i++) {//print arrays to fix bags
-                //    cout << arr_comp[i] << " ";
-                //}
-                //cout << endl;
-                //for (int i = 0; i < size; i++) {
-                //    cout << user_arr[i] << " ";
-                //}
-                //cout << endl;
 
 
                 break;
@@ -138,8 +99,6 @@ int game_func(int comp_arr[], int i = 1) {
             temp_2[i] = arr_user[i];
         }
         num_bulls = find_bulls(temp_1, temp_2);
-
-        /*num_bulls = find_buls(comp_arr, arr_user);*/
         num_cow = find_cows(comp_arr, arr_user);
         num_bulls -= num_cow;//num bull from func include num cow, so num_bulls real: num_bulls = num_bulls - num_cow;
         cout << "You have bull(s): " << num_bulls << endl;
@@ -163,12 +122,6 @@ int main() {
     for (int i = 1; i < main_size; i++) {
         arr_comp[i] = rand() % 10;
     }
-
-    //print arr_comp- to find and fix bags
-    /*for (int i = 0; i < main_size; i++) {
-        cout << arr_comp[i] << " ";
-    }
-    cout << endl;*/
 
     cout << "\tGame bulls and cows" << endl << endl;
 
